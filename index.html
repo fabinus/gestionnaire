@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Clément !</title>
+    <style>
+        /* --- RESET & POLICE DE CARACTÈRES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* Fond dégradé doux et moderne */
+            overflow: hidden; /* Empêche le défilement si le design dépasse */
+        }
+
+        /* --- ÉLÉMENTS DE DÉCORATION D'ARRIÈRE-PLAN --- */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(127, 207, 255, 0.4), rgba(71, 118, 230, 0.4));
+            z-index: 1; /* Derrière le container principal */
+            filter: blur(5px);
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            animation: move-1 15s infinite ease-in-out;
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -100px;
+            background: linear-gradient(135deg, rgba(238, 156, 167, 0.4), rgba(255, 221, 225, 0.4));
+            animation: move-2 20s infinite ease-in-out;
+        }
+
+        /* --- CONTAINER PRINCIPAL (DESIGN VERRE) --- */
+        .glass-container {
+            position: relative;
+            z-index: 10; /* Devant les cercles */
+            width: 90%;
+            max-width: 500px;
+            padding: 50px 30px;
+            background: rgba(255, 255, 255, 0.35); /* Transparence pour le 'verre' */
+            border-radius: 25px;
+            backdrop-filter: blur(15px); /* Flou de l'arrière-plan (effet verre) */
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-container:hover {
+            transform: translateY(-5px); /* Petit effet au survol */
+        }
+
+        /* --- LE TEXTE "COUCOU CLÉMENT" --- */
+        .title {
+            font-size: 3rem; /* Grosse taille */
+            font-weight: 800;
+            color: transparent; /* Pour appliquer le dégradé sur le texte */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Dégradé élégant */
+            -webkit-background-clip: text; /* Masque de fond sur le texte */
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0px 5px 10px rgba(118, 75, 162, 0.15); /* Légère ombre pour le relief */
+            line-height: 1.2;
+        }
+
+        /* --- SOUS-TEXTE OPTIONNEL --- */
+        .subtitle {
+            font-size: 1.1rem;
+            color: #555;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-top: -10px;
+            margin-bottom: 30px;
+        }
+
+        /* --- BOUTON DE DESIGN (OPTIONNEL) --- */
+        .button-design {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .button-design:hover {
+            box-shadow: 0 15px 25px rgba(102, 126, 234, 0.4);
+            transform: scale(1.03);
+        }
+
+        /* --- ANIMATIONS D'ARRIÈRE-PLAN --- */
+        @keyframes move-1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(150px, 100px); }
+        }
+
+        @keyframes move-2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-150px, -100px); }
+        }
+
+        /* --- RESPONSIVE (POUR PETITS ÉCRANS) --- */
+        @media (max-width: 400px) {
+            .title { font-size: 2.2rem; }
+            .glass-container { padding: 40px 20px; }
+        }
+    </style>
+    <!-- Chargement de la police Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Cercles animés pour le design de fond -->
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+
+    <!-- Container du contenu principal -->
+    <div class="glass-container">
+        <h1 class="title">Coucou Clément</h1>
+        <p class="subtitle">Bienvenue sur ta magnifique page d'index.</p>
+        
+        <!-- Tu peux enlever ce bouton si tu n'en as pas besoin -->
+        <a href="#" class="button-design">Explorer</a>
+    </div>
+
+</body>
+</html>
