@@ -3,152 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello Clément !</title>
+    <title>Clément | Accueil</title>
+    
+    <!-- Polices Premium (Poppins & Playfair Display) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* --- RESET & POLICE DE CARACTÈRES --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* -----------------------------------------------------------
+           1. RESET & VARIABLES (La base)
+        ----------------------------------------------------------- */
+        :root {
+            --primary-grad: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-grad: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #d1d1d1;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: #0a0e17; /* Fond sombre ultra-moderne */
+            color: var(--text-main);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* Fond dégradé doux et moderne */
-            overflow: hidden; /* Empêche le défilement si le design dépasse */
+            overflow: hidden; /* Empêche le scroll pour l'effet splash */
+            perspective: 1000px; /* Pour les effets 3D */
         }
 
-        /* --- ÉLÉMENTS DE DÉCORATION D'ARRIÈRE-PLAN --- */
-        .circle {
+        /* -----------------------------------------------------------
+           2. ARRIÈRE-PLAN ANIMÉ (Les Bulles de Lumière)
+        ----------------------------------------------------------- */
+        .background-orb {
             position: absolute;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(127, 207, 255, 0.4), rgba(71, 118, 230, 0.4));
-            z-index: 1; /* Derrière le container principal */
-            filter: blur(5px);
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.6;
+            animation: orbFloat 20s infinite ease-in-out;
         }
 
-        .circle-1 {
-            width: 300px;
-            height: 300px;
-            top: -100px;
-            left: -100px;
-            animation: move-1 15s infinite ease-in-out;
+        .orb-1 {
+            width: 400px; height: 400px;
+            background: #4facfe;
+            top: -100px; left: -100px;
         }
 
-        .circle-2 {
-            width: 400px;
-            height: 400px;
-            bottom: -150px;
-            right: -100px;
-            background: linear-gradient(135deg, rgba(238, 156, 167, 0.4), rgba(255, 221, 225, 0.4));
-            animation: move-2 20s infinite ease-in-out;
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: #00f2fe;
+            bottom: -150px; right: -50px;
+            animation-delay: -5s;
         }
 
-        /* --- CONTAINER PRINCIPAL (DESIGN VERRE) --- */
-        .glass-container {
+        .orb-3 {
+            width: 300px; height: 300px;
+            background: #ff0055;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 15s;
+            opacity: 0.3;
+        }
+
+        /* -----------------------------------------------------------
+           3. CONTAINER GLASSMORPHISM (Le Cœur du Design)
+        ----------------------------------------------------------- */
+        .main-card {
             position: relative;
-            z-index: 10; /* Devant les cercles */
+            z-index: 10;
             width: 90%;
-            max-width: 500px;
-            padding: 50px 30px;
-            background: rgba(255, 255, 255, 0.35); /* Transparence pour le 'verre' */
-            border-radius: 25px;
-            backdrop-filter: blur(15px); /* Flou de l'arrière-plan (effet verre) */
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            max-width: 650px;
+            padding: 60px 50px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); /* Support Safari */
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
             text-align: center;
-            transform: translateY(0);
-            transition: transform 0.3s ease;
+            
+            /* Animation d'entrée */
+            opacity: 0;
+            transform: translateY(30px) rotateX(10deg);
+            animation: cardEnter 1s forwards cubic-bezier(0.23, 1, 0.32, 1);
+            animation-delay: 0.3s;
         }
 
-        .glass-container:hover {
-            transform: translateY(-5px); /* Petit effet au survol */
+        /* Effet de reflet brillant au survol */
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
         }
+        .main-card:hover::before { left: 100%; }
 
-        /* --- LE TEXTE "COUCOU CLÉMENT" --- */
-        .title {
-            font-size: 3rem; /* Grosse taille */
-            font-weight: 800;
-            color: transparent; /* Pour appliquer le dégradé sur le texte */
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Dégradé élégant */
-            -webkit-background-clip: text; /* Masque de fond sur le texte */
-            background-clip: text;
-            margin-bottom: 20px;
-            text-shadow: 0px 5px 10px rgba(118, 75, 162, 0.15); /* Légère ombre pour le relief */
-            line-height: 1.2;
-        }
-
-        /* --- SOUS-TEXTE OPTIONNEL --- */
-        .subtitle {
-            font-size: 1.1rem;
-            color: #555;
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin-top: -10px;
-            margin-bottom: 30px;
-        }
-
-        /* --- BOUTON DE DESIGN (OPTIONNEL) --- */
-        .button-design {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+        /* -----------------------------------------------------------
+           4. TYPOGRAPHIE & CONTENU
+        ----------------------------------------------------------- */
+        
+        /* Petit label "BIENVENUE" */
+        .welcome-label {
+            font-size: 0.8rem;
             text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            letter-spacing: 4px;
+            color: #4facfe;
+            font-weight: 600;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards 0.8s;
+        }
+
+        /* LE TITRE PRINCIPAL : Coucou Clément */
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            
+            /* Texte Dégradé */
+            background: linear-gradient(135deg, #ffffff 30%, #a2c2e6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            opacity: 0;
+            animation: fadeIn 0.8s forwards 1s;
+        }
+
+        /* Le Sous-texte */
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 80%;
+            margin: 0 auto 40px auto;
+            opacity: 0;
+            animation: fadeIn 0.8s forwards 1.2s;
+        }
+
+        /* -----------------------------------------------------------
+           5. BOUTONS & INTERACTIONS
+        ----------------------------------------------------------- */
+        .action-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 50px;
+            background: #ffffff;
+            color: #0a0e17;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+            
+            opacity: 0;
+            animation: fadeIn 0.8s forwards 1.4s;
         }
 
-        .button-design:hover {
-            box-shadow: 0 15px 25px rgba(102, 126, 234, 0.4);
-            transform: scale(1.03);
+        .action-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.4);
+            background: #4facfe;
+            color: #ffffff;
         }
 
-        /* --- ANIMATIONS D'ARRIÈRE-PLAN --- */
-        @keyframes move-1 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(150px, 100px); }
+        /* -----------------------------------------------------------
+           6. KEYFRAMES ANIMATIONS
+        ----------------------------------------------------------- */
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 30px) scale(1.1); }
         }
 
-        @keyframes move-2 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-150px, -100px); }
+        @keyframes cardEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
         }
 
-        /* --- RESPONSIVE (POUR PETITS ÉCRANS) --- */
-        @media (max-width: 400px) {
-            .title { font-size: 2.2rem; }
-            .glass-container { padding: 40px 20px; }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* -----------------------------------------------------------
+           7. RESPONSIVE DESIGN (Adaptation Mobile)
+        ----------------------------------------------------------- */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3rem; }
+            .main-card { padding: 40px 25px; width: 95%; }
+            .hero-desc { max-width: 100%; font-size: 1rem; }
+            body { overflow: auto; } /* Permet le scroll si le contenu dépasse sur petit écran */
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2.5rem; }
+            .action-btn { width: 100%; padding: 15px 20px; }
         }
     </style>
-    <!-- Chargement de la police Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Cercles animés pour le design de fond -->
-    <div class="circle circle-1"></div>
-    <div class="circle circle-2"></div>
+    <!-- Éléments décoratifs d'arrière-plan -->
+    <div class="background-orb orb-1"></div>
+    <div class="background-orb orb-2"></div>
+    <div class="background-orb orb-3"></div>
 
-    <!-- Container du contenu principal -->
-    <div class="glass-container">
-        <h1 class="title">Coucou Clément</h1>
-        <p class="subtitle">Bienvenue sur ta magnifique page d'index.</p>
+    <!-- Carte principale -->
+    <main class="main-card">
+        <p class="welcome-label">Portfolio Personnel</p>
+        <h1 class="hero-title">Coucou<br>Clément</h1>
+        <p class="hero-desc">
+            Bienvenue sur cet espace minimaliste et moderne. Cette page est le point de départ de quelque chose de grand. Restez connectés.
+        </p>
         
-        <!-- Tu peux enlever ce bouton si tu n'en as pas besoin -->
-        <a href="#" class="button-design">Explorer</a>
-    </div>
+        <!-- Bouton d'action (modifiable) -->
+        <a href="mailto:clem@exemple.com" class="action-btn">Me Contacter</a>
+    </main>
 
 </body>
 </html>
