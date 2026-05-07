@@ -201,7 +201,8 @@
     .node.active .node-name {
       color: #ffd700;
       text-shadow: 0 0 28px rgba(255,215,0,0.85);
-      font-size: 1.15rem;
+      font-size: 1.9rem;
+      letter-spacing: 4px;
     }
 
     .n1 { top: 0%;   left: 50%; translate: -50% 0; }
@@ -231,10 +232,7 @@
     }
     #tooltip.show { opacity: 1; }
 
-    .orbit-wrap:hover,
-    .orbit-wrap:hover .node {
-      animation-play-state: paused;
-    }
+
 
     @keyframes spin         { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
     @keyframes counter-spin { from { transform: rotate(0deg); }   to { transform: rotate(-360deg); } }
