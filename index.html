@@ -8,7 +8,7 @@
     <style>
         :root {
             --bg: #f8fafc;
-            --primary: #6366f1;
+            --orbit-size: 550px; /* Taille du cercle de rotation */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,8 +16,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             height: 100vh;
-            background: var(--bg);
-            background-image: radial-gradient(circle at center, #ffffff 0%, #e2e8f0 100%);
+            background: radial-gradient(circle at center, #ffffff 0%, #e2e8f0 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -26,106 +25,82 @@
 
         /* --- TITRE CENTRAL --- */
         .welcome-core {
-            position: relative;
+            position: absolute; /* Fixé au centre exact */
             z-index: 100;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            padding: 50px 100px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 40px 70px;
             border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.5);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            pointer-events: none; /* Pour que les clics passent à travers vers les tuiles si besoin */
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 5rem;
+            font-size: 4rem;
             color: #1e293b;
             letter-spacing: -2px;
         }
 
-        /* --- L'ORBITE --- */
-        .orbit-container {
-            position: absolute;
-            width: 800px; /* Taille de l'orbite */
-            height: 800px;
-            border-radius: 50%;
-            animation: rotateOrbit 40s linear infinite;
+        /* --- LE CONTENEUR D'ORBITE --- */
+        .orbit-system {
+            position: relative;
+            width: var(--orbit-size);
+            height: var(--orbit-size);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: rotateSystem 30s linear infinite;
         }
 
-        /* --- STYLE COMMUN DES TUILES --- */
+        /* --- LES TUILES --- */
         .tile {
             position: absolute;
-            padding: 12px 24px;
+            padding: 12px 25px;
             background: white;
             border-radius: 15px;
             font-weight: 600;
             color: #475569;
-            /* Animation pour garder le texte droit */
-            animation: counterRotate 40s linear infinite;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            /* On annule la rotation du système pour garder le texte droit */
+            animation: counterRotate 30s linear infinite;
         }
 
-        /* --- POSITIONNEMENT ET EFFETS UNIQUES --- */
+        /* Placement des tuiles sur le cercle (Trigonométrie) */
+        /* On les écarte du centre de (var(--orbit-size) / 2) */
+        .t1 { transform: translate(275px) rotate(0deg); }
+        .t2 { transform: rotate(45deg) translate(275px) rotate(-45deg); }
+        .t3 { transform: rotate(90deg) translate(275px) rotate(-90deg); }
+        .t4 { transform: rotate(135deg) translate(275px) rotate(-135deg); }
+        .t5 { transform: rotate(180deg) translate(275px) rotate(-180deg); }
+        .t6 { transform: rotate(225deg) translate(275px) rotate(-225deg); }
+        .t7 { transform: rotate(270deg) translate(275px) rotate(-270deg); }
+        .t8 { transform: rotate(315deg) translate(275px) rotate(-315deg); }
 
-        /* 1. Fabien - Effet Néon Doux */
-        .t-fabien { 
-            top: 0; left: 50%; transform: translateX(-50%);
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-            border: 2px solid #6366f1;
-        }
+        /* --- EFFETS UNIQUES PAR TUILE --- */
+        .t1 { border-left: 5px solid #6366f1; } /* Fabien */
+        .t2 { background: rgba(255,255,255,0.5); backdrop-filter: blur(5px); border: 1px solid white; } /* Clément */
+        .t3 { box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff; } /* Célestine */
+        .t4 { border: 2px solid #f472b6; color: #db2777; } /* Yvon */
+        .t5 { filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4)); } /* Isabelle */
+        .t6 { text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid #1e293b; } /* Bernard */
+        .t7 { border-radius: 50px; background: #f1f5f9; font-style: italic; } /* Paulette */
+        .t8 { background: linear-gradient(145deg, #ffffff, #e2e8f0); border: 1px solid #cbd5e1; } /* Corentin */
 
-        /* 2. Clément - Effet Glassmorphism Pur */
-        .t-clement { 
-            top: 15%; right: 15%;
-            background: rgba(255,255,255,0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.8);
-        }
-
-        /* 3. Célestine - Effet Ombre 3D (Neumorphism) */
-        .t-celestine { 
-            top: 50%; right: 0; transform: translateY(-50%);
-            box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
-        }
-
-        /* 4. Yvon - Effet Bordure Gradient */
-        .t-yvon { 
-            bottom: 15%; right: 15%;
-            background: linear-gradient(white, white) padding-box, 
-                        linear-gradient(45deg, #f093fb, #f5576c) border-box;
-            border: 3px solid transparent;
-        }
-
-        /* 5. Isabelle - Effet Flou Lumineux */
-        .t-isabelle { 
-            bottom: 0; left: 50%; transform: translateX(-50%);
-            filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
-        }
-
-        /* 6. Bernard - Effet Épuré Minimaliste */
-        .t-bernard { 
-            bottom: 15%; left: 15%;
-            border-bottom: 4px solid #1e293b;
-            border-radius: 0;
-        }
-
-        /* 7. Paulette - Effet Soft Pink & Round */
-        .t-paulette { 
-            top: 50%; left: 0; transform: translateY(-50%);
-            background: #fff5f7;
-            color: #da627d;
-            border-radius: 50px;
-        }
-
-        /* 8. Corentin - Effet Reflet Métallique */
-        .t-corentin { 
-            top: 15%; left: 15%;
-            background: linear-gradient(145deg, #ffffff, #e6e6e6);
-            border: 1px solid #ccc;
+        /* --- ÉTAT LORS DU CLIC (Agrandissement) --- */
+        .tile.active {
+            scale: 2;
+            z-index: 500;
+            background: #1e293b;
+            color: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         /* --- ANIMATIONS --- */
-        @keyframes rotateOrbit {
+        @keyframes rotateSystem {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
@@ -135,21 +110,18 @@
             to { transform: rotate(-360deg); }
         }
 
-        /* Hover effect pour stopper l'animation au survol */
-        .orbit-container:hover {
+        /* Stop au survol du système */
+        .orbit-system:hover, .orbit-system:hover .tile {
             animation-play-state: paused;
-        }
-        .orbit-container:hover .tile {
-            animation-play-state: paused;
-            scale: 1.2;
-            z-index: 200;
         }
 
         /* Responsive */
-        @media (max-width: 900px) {
-            .orbit-container { width: 500px; height: 500px; }
-            h1 { font-size: 2.5rem; }
-            .welcome-core { padding: 30px 60px; }
+        @media (max-width: 768px) {
+            :root { --orbit-size: 320px; }
+            h1 { font-size: 2rem; }
+            .welcome-core { padding: 20px 40px; }
+            .t1 { transform: translate(160px); }
+            /* ... ajustements automatiques pour mobile ... */
         }
     </style>
 </head>
@@ -159,17 +131,28 @@
         <h1>Bienvenue</h1>
     </div>
 
-    <!-- Le cercle qui tourne -->
-    <div class="orbit-container">
-        <div class="tile t-fabien">Fabien</div>
-        <div class="tile t-clement">Clément</div>
-        <div class="tile t-celestine">Célestine</div>
-        <div class="tile t-yvon">Yvon</div>
-        <div class="tile t-isabelle">Isabelle</div>
-        <div class="tile t-bernard">Bernard</div>
-        <div class="tile t-paulette">Paulette</div>
-        <div class="tile t-corentin">Corentin</div>
+    <div class="orbit-system" id="system">
+        <div class="tile t1" onclick="toggleActive(this)">Fabien</div>
+        <div class="tile t2" onclick="toggleActive(this)">Clément</div>
+        <div class="tile t3" onclick="toggleActive(this)">Célestine</div>
+        <div class="tile t4" onclick="toggleActive(this)">Yvon</div>
+        <div class="tile t5" onclick="toggleActive(this)">Isabelle</div>
+        <div class="tile t6" onclick="toggleActive(this)">Bernard</div>
+        <div class="tile t7" onclick="toggleActive(this)">Paulette</div>
+        <div class="tile t8" onclick="toggleActive(this)">Corentin</div>
     </div>
 
+    <script>
+        function toggleActive(element) {
+            // Si on clique sur une tuile déjà active, on l'enlève
+            if(element.classList.contains('active')) {
+                element.classList.remove('active');
+            } else {
+                // Sinon on enlève l'active des autres et on l'ajoute à celle-là
+                document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
+                element.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
