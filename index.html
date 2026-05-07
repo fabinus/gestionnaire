@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenue | Galaxie</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Poppins:wght@600&display=swap" rel="stylesheet">
     <style>
-        /* Configuration de base pour occuper tout l'écran */
+        /* On force le body à prendre tout l'écran sans marges */
         html, body {
             margin: 0;
             padding: 0;
@@ -14,94 +13,84 @@
             height: 100%;
             overflow: hidden;
             background: #f8fafc;
-        }
-
-        body {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Poppins', sans-serif;
+            font-family: sans-serif;
         }
 
-        /* TITRE CENTRAL */
+        /* TITRE CENTRAL FIXE */
         .welcome {
             position: absolute;
-            z-index: 10;
+            z-index: 100;
             background: white;
-            padding: 20px 50px;
-            border-radius: 100px;
+            padding: 20px 40px;
+            border-radius: 50px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
+            font-weight: bold;
             color: #1e293b;
-            text-align: center;
         }
 
-        /* L'ORBITE */
+        /* ZONE DES PRÉNOMS (L'Univers) */
         .universe {
             position: relative;
-            width: 600px; /* Zone d'évolution */
-            height: 600px;
+            width: 80vw;  /* Prend 80% de la largeur de ton écran */
+            height: 80vh; /* Prend 80% de la hauteur de ton écran */
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: rotateUniverse 30s linear infinite;
+            animation: rotate 30s linear infinite;
+            /* border: 2px dashed red; */ /* ENLÈVE LE COMMENTAIRE SI TU NE VOIS RIEN */
         }
 
-        /* STYLE DES TUILES */
-        .tile {
+        /* STYLE DES PRÉNOMS */
+        .name-tile {
             position: absolute;
-            padding: 12px 20px;
             background: white;
+            padding: 10px 20px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
             cursor: pointer;
-            white-space: nowrap;
-            animation: counterRotate 30s linear infinite;
-            transition: transform 0.3s ease, background 0.3s ease;
+            animation: counter-rotate 30s linear infinite;
+            transition: all 0.3s;
         }
 
-        /* POSITIONNEMENT DES TUILES (8 directions) */
-        /* Chaque tuile est poussée vers l'extérieur depuis le centre */
-        .t1 { transform: rotate(0deg)   translate(280px) rotate(0deg);   border-top: 4px solid #6366f1; }
-        .t2 { transform: rotate(45deg)  translate(280px) rotate(-45deg); border-top: 4px solid #f472b6; }
-        .t3 { transform: rotate(90deg)  translate(280px) rotate(-90deg); border-top: 4px solid #fbbf24; }
-        .t4 { transform: rotate(135deg) translate(280px) rotate(-135deg); border-top: 4px solid #4ade80; }
-        .t5 { transform: rotate(180deg) translate(280px) rotate(-180deg); border-top: 4px solid #06b6d4; }
-        .t6 { transform: rotate(225deg) translate(280px) rotate(-225deg); border-top: 4px solid #f97316; }
-        .t7 { transform: rotate(270deg) translate(280px) rotate(-270deg); border-top: 4px solid #8b5cf6; }
-        .t8 { transform: rotate(315deg) translate(280px) rotate(-315deg); border-top: 4px solid #ef4444; }
+        /* PLACEMENT PAR TRANSFORMATION (Incassable) */
+        /* Chaque tuile est poussée vers l'extérieur du centre */
+        .t1 { transform: rotate(0deg)   translate(250px); border-top: 4px solid #6366f1; }
+        .t2 { transform: rotate(45deg)  translate(250px); border-top: 4px solid #f472b6; }
+        .t3 { transform: rotate(90deg)  translate(250px); border-top: 4px solid #fbbf24; }
+        .t4 { transform: rotate(135deg) translate(250px); border-top: 4px solid #4ade80; }
+        .t5 { transform: rotate(180deg) translate(250px); border-top: 4px solid #06b6d4; }
+        .t6 { transform: rotate(225deg) translate(250px); border-top: 4px solid #f97316; }
+        .t7 { transform: rotate(270deg) translate(250px); border-top: 4px solid #8b5cf6; }
+        .t8 { transform: rotate(315deg) translate(250px); border-top: 4px solid #ef4444; }
 
         /* EFFET AU CLIC */
-        .tile.active {
-            z-index: 100;
-            background: #1e293b !important;
-            color: white !important;
-            transform: scale(2) !important; /* Agrandissement massif */
-            animation-play-state: paused;
+        .name-tile.active {
+            scale: 2;
+            background: #1e293b;
+            color: white;
+            z-index: 1000;
         }
 
         /* ANIMATIONS */
-        @keyframes rotateUniverse {
+        @keyframes rotate {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
-        @keyframes counterRotate {
+        @keyframes counter-rotate {
             from { transform: rotate(0deg); }
             to { transform: rotate(-360deg); }
         }
 
-        /* PAUSE AU SURVOL */
-        .universe:hover, .universe:hover .tile {
-            animation-play-state: paused;
-        }
-
-        /* RESPONSIVE MOBILE */
-        @media (max-width: 650px) {
-            .universe { width: 300px; height: 300px; }
-            .welcome { font-size: 1.5rem; padding: 15px 30px; }
-            .t1, .t2, .t3, .t4, .t5, .t6, .t7, .t8 { translate: 140px; } /* Rayon réduit sur mobile */
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .name-tile { padding: 5px 10px; font-size: 0.8rem; }
+            .t1, .t2, .t3, .t4, .t5, .t6, .t7, .t8 { translate: 120px; }
         }
     </style>
 </head>
@@ -110,25 +99,15 @@
     <div class="welcome">Bienvenue</div>
 
     <div class="universe">
-        <div class="tile t1" onclick="active(this)">Fabien</div>
-        <div class="tile t2" onclick="active(this)">Clément</div>
-        <div class="tile t3" onclick="active(this)">Célestine</div>
-        <div class="tile t4" onclick="active(this)">Yvon</div>
-        <div class="tile t5" onclick="active(this)">Isabelle</div>
-        <div class="tile t6" onclick="active(this)">Bernard</div>
-        <div class="tile t7" onclick="active(this)">Paulette</div>
-        <div class="tile t8" onclick="active(this)">Corentin</div>
+        <div class="name-tile t1" onclick="this.classList.toggle('active')">Fabien</div>
+        <div class="name-tile t2" onclick="this.classList.toggle('active')">Clément</div>
+        <div class="name-tile t3" onclick="this.classList.toggle('active')">Célestine</div>
+        <div class="name-tile t4" onclick="this.classList.toggle('active')">Yvon</div>
+        <div class="name-tile t5" onclick="this.classList.toggle('active')">Isabelle</div>
+        <div class="name-tile t6" onclick="this.classList.toggle('active')">Bernard</div>
+        <div class="name-tile t7" onclick="this.classList.toggle('active')">Paulette</div>
+        <div class="name-tile t8" onclick="this.classList.toggle('active')">Corentin</div>
     </div>
 
-    <script>
-        function active(el) {
-            // Désactive les autres
-            document.querySelectorAll('.tile').forEach(t => {
-                if(t !== el) t.classList.remove('active');
-            });
-            // Alterne l'état de la tuile cliquée
-            el.classList.toggle('active');
-        }
-    </script>
 </body>
 </html>
