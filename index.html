@@ -3,101 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue</title>
+    <title>Clément | Univers Chromatique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        /* On bloque tout au centre de l'écran quoi qu'il arrive */
-        html, body {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            background: #f0f4f8;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* --- VARIABLES DE COULEURS ANIMÉES --- */
+        :root {
+            --bg: #030509;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
-        }
-
-        /* LE TITRE AU MILIEU */
-        .bienvenue {
-            position: absolute;
-            z-index: 10;
-            background: white;
-            padding: 20px 50px;
-            border-radius: 100px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #2d3748;
-        }
-
-        /* LE CERCLE QUI PORTE LES NOMS */
-        .orbite {
-            position: relative;
-            width: 500px; /* Taille fixe pour ne pas s'enfuir */
-            height: 500px;
-            animation: rotation 20s linear infinite;
-        }
-
-        /* STYLE DES TUILES */
-        .nom {
-            position: absolute;
-            background: white;
-            padding: 12px 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            /* On annule la rotation pour garder le texte droit */
-            animation: contre-rotation 20s linear infinite;
-            transition: all 0.3s ease;
-        }
-
-        /* POSITIONNEMENT FIXE (Sûr à 100%) */
-        .n1 { top: 0%; left: 50%; transform: translate(-50%, -50%); border-top: 4px solid #4299e1; }
-        .n2 { top: 15%; left: 85%; border-top: 4px solid #ed64a6; }
-        .n3 { top: 50%; left: 100%; transform: translate(-50%, -50%); border-top: 4px solid #ecc94b; }
-        .n4 { top: 85%; left: 85%; border-top: 4px solid #48bb78; }
-        .n5 { top: 100%; left: 50%; transform: translate(-50%, -50%); border-top: 4px solid #38b2ac; }
-        .n6 { top: 85%; left: 15%; border-top: 4px solid #ed8936; }
-        .n7 { top: 50%; left: 0%; transform: translate(-50%, -50%); border-top: 4px solid #9f7aea; }
-        .n8 { top: 15%; left: 15%; border-top: 4px solid #f56565; }
-
-        /* EFFET AU CLIC */
-        .nom.active {
-            transform: scale(2) !important;
-            background: #1a202c;
             color: white;
+        }
+
+        /* --- FOND DYNAMIQUE --- */
+        .color-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            z-index: -1;
+        }
+
+        /* Lueur qui change de couleur doucement */
+        .glow-aura {
+            position: absolute;
+            width: 80vw;
+            height: 80vh;
+            background: radial-gradient(circle, rgba(79, 172, 254, 0.3) 0%, transparent 70%);
+            filter: blur(100px);
+            animation: colorShift 15s infinite alternate ease-in-out;
+            z-index: 0;
+        }
+
+        /* --- CONTENEUR D'ORBITE --- */
+        .orbit-container {
+            position: relative;
+            width: 650px;
+            height: 650px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- CŒUR CENTRAL --- */
+        .center-card {
+            position: relative;
             z-index: 100;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 50px;
+            border-radius: 50%;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.5);
+            animation: float 6s infinite ease-in-out;
         }
 
-        /* ANIMATIONS SIMPLE */
-        @keyframes rotation {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes contre-rotation {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(-360deg); }
+        .center-card h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            /* Texte avec dégradé animé */
+            background: linear-gradient(to bottom, #fff, #a2c2e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
         }
 
-        /* Arrêt au survol */
-        .orbite:hover, .orbite:hover .nom {
-            animation-play-state: paused;
+        /* --- TUILES EN ORBITE --- */
+        .orbit-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: rotate 30s linear infinite;
+        }
+
+        .tile {
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: counter-rotate 30s linear infinite;
+        }
+
+        /* Effet de couleur changeante sur les bordures au survol */
+        .tile:hover {
+            transform: scale(1.15);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #4facfe;
+            box-shadow: 0 0 30px rgba(79, 172, 254, 0.5);
+        }
+
+        /* Positionnement des 4 tuiles */
+        .t1 { top: 0; left: 50%; translate: -50% 0; border-bottom: 3px solid #4facfe; }
+        .t2 { bottom: 0; left: 50%; translate: -50% 0; border-top: 3px solid #00f2fe; }
+        .t3 { left: 0; top: 50%; translate: 0 -50%; border-right: 3px solid #ff0055; }
+        .t4 { right: 0; top: 50%; translate: 0 -50%; border-left: 3px solid #7000ff; }
+
+        .tile i { font-size: 1.8rem; margin-bottom: 8px; }
+        .tile span { font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; color: #ddd; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes counter-rotate { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes colorShift {
+            0% { background: radial-gradient(circle, rgba(79, 172, 254, 0.4) 0%, transparent 70%); }
+            33% { background: radial-gradient(circle, rgba(112, 0, 255, 0.4) 0%, transparent 70%); }
+            66% { background: radial-gradient(circle, rgba(255, 0, 85, 0.4) 0%, transparent 70%); }
+            100% { background: radial-gradient(circle, rgba(0, 242, 254, 0.4) 0%, transparent 70%); }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 700px) {
+            .orbit-container { transform: scale(0.5); }
         }
     </style>
 </head>
 <body>
 
-    <div class="bienvenue">Bienvenue</div>
+    <div class="color-bg"></div>
+    <div class="glow-aura"></div>
 
-    <div class="orbite">
-        <div class="nom n1" onclick="this.classList.toggle('active')">Fabien</div>
-        <div class="nom n2" onclick="this.classList.toggle('active')">Clément</div>
-        <div class="nom n3" onclick="this.classList.toggle('active')">Célestine</div>
-        <div class="nom n4" onclick="this.classList.toggle('active')">Yvon</div>
-        <div class="nom n5" onclick="this.classList.toggle('active')">Isabelle</div>
-        <div class="nom n6" onclick="this.classList.toggle('active')">Bernard</div>
-        <div class="nom n7" onclick="this.classList.toggle('active')">Paulette</div>
-        <div class="nom n8" onclick="this.classList.toggle('active')">Corentin</div>
+    <div class="orbit-container">
+        <!-- Cœur de l'univers -->
+        <div class="center-card">
+            <p style="font-size: 0.65rem; letter-spacing: 5px; color: #4facfe; margin-bottom: 10px;">HELLO</p>
+            <h1>Coucou Clément</h1>
+            <div style="width: 40px; height: 2px; background: #fff; margin: 20px auto; opacity: 0.5;"></div>
+        </div>
+
+        <!-- Système orbital -->
+        <div class="orbit-wrapper">
+            <div class="tile t1">
+                <i>🚀</i>
+                <span>Projets</span>
+            </div>
+            <div class="tile t2">
+                <i>✉️</i>
+                <span>Contact</span>
+            </div>
+            <div class="tile t3">
+                <i>💎</i>
+                <span>Skills</span>
+            </div>
+            <div class="tile t4">
+                <i>🔥</i>
+                <span>Bio</span>
+            </div>
+        </div>
     </div>
 
 </body>
