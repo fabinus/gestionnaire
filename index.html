@@ -3,110 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue | Galaxie</title>
+    <title>Bienvenue</title>
     <style>
-        /* On force le body à prendre tout l'écran sans marges */
+        /* On bloque tout au centre de l'écran quoi qu'il arrive */
         html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            background: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            background: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: sans-serif;
         }
 
-        /* TITRE CENTRAL FIXE */
-        .welcome {
+        /* LE TITRE AU MILIEU */
+        .bienvenue {
             position: absolute;
-            z-index: 100;
+            z-index: 10;
             background: white;
-            padding: 20px 40px;
-            border-radius: 50px;
+            padding: 20px 50px;
+            border-radius: 100px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             font-size: 2.5rem;
             font-weight: bold;
-            color: #1e293b;
+            color: #2d3748;
         }
 
-        /* ZONE DES PRÉNOMS (L'Univers) */
-        .universe {
+        /* LE CERCLE QUI PORTE LES NOMS */
+        .orbite {
             position: relative;
-            width: 80vw;  /* Prend 80% de la largeur de ton écran */
-            height: 80vh; /* Prend 80% de la hauteur de ton écran */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: rotate 30s linear infinite;
-            /* border: 2px dashed red; */ /* ENLÈVE LE COMMENTAIRE SI TU NE VOIS RIEN */
+            width: 500px; /* Taille fixe pour ne pas s'enfuir */
+            height: 500px;
+            animation: rotation 20s linear infinite;
         }
 
-        /* STYLE DES PRÉNOMS */
-        .name-tile {
+        /* STYLE DES TUILES */
+        .nom {
             position: absolute;
             background: white;
-            padding: 10px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-weight: 600;
             cursor: pointer;
-            animation: counter-rotate 30s linear infinite;
-            transition: all 0.3s;
+            white-space: nowrap;
+            /* On annule la rotation pour garder le texte droit */
+            animation: contre-rotation 20s linear infinite;
+            transition: all 0.3s ease;
         }
 
-        /* PLACEMENT PAR TRANSFORMATION (Incassable) */
-        /* Chaque tuile est poussée vers l'extérieur du centre */
-        .t1 { transform: rotate(0deg)   translate(250px); border-top: 4px solid #6366f1; }
-        .t2 { transform: rotate(45deg)  translate(250px); border-top: 4px solid #f472b6; }
-        .t3 { transform: rotate(90deg)  translate(250px); border-top: 4px solid #fbbf24; }
-        .t4 { transform: rotate(135deg) translate(250px); border-top: 4px solid #4ade80; }
-        .t5 { transform: rotate(180deg) translate(250px); border-top: 4px solid #06b6d4; }
-        .t6 { transform: rotate(225deg) translate(250px); border-top: 4px solid #f97316; }
-        .t7 { transform: rotate(270deg) translate(250px); border-top: 4px solid #8b5cf6; }
-        .t8 { transform: rotate(315deg) translate(250px); border-top: 4px solid #ef4444; }
+        /* POSITIONNEMENT FIXE (Sûr à 100%) */
+        .n1 { top: 0%; left: 50%; transform: translate(-50%, -50%); border-top: 4px solid #4299e1; }
+        .n2 { top: 15%; left: 85%; border-top: 4px solid #ed64a6; }
+        .n3 { top: 50%; left: 100%; transform: translate(-50%, -50%); border-top: 4px solid #ecc94b; }
+        .n4 { top: 85%; left: 85%; border-top: 4px solid #48bb78; }
+        .n5 { top: 100%; left: 50%; transform: translate(-50%, -50%); border-top: 4px solid #38b2ac; }
+        .n6 { top: 85%; left: 15%; border-top: 4px solid #ed8936; }
+        .n7 { top: 50%; left: 0%; transform: translate(-50%, -50%); border-top: 4px solid #9f7aea; }
+        .n8 { top: 15%; left: 15%; border-top: 4px solid #f56565; }
 
         /* EFFET AU CLIC */
-        .name-tile.active {
-            scale: 2;
-            background: #1e293b;
+        .nom.active {
+            transform: scale(2) !important;
+            background: #1a202c;
             color: white;
-            z-index: 1000;
+            z-index: 100;
         }
 
-        /* ANIMATIONS */
-        @keyframes rotate {
+        /* ANIMATIONS SIMPLE */
+        @keyframes rotation {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-
-        @keyframes counter-rotate {
+        @keyframes contre-rotation {
             from { transform: rotate(0deg); }
             to { transform: rotate(-360deg); }
         }
 
-        /* MOBILE */
-        @media (max-width: 600px) {
-            .name-tile { padding: 5px 10px; font-size: 0.8rem; }
-            .t1, .t2, .t3, .t4, .t5, .t6, .t7, .t8 { translate: 120px; }
+        /* Arrêt au survol */
+        .orbite:hover, .orbite:hover .nom {
+            animation-play-state: paused;
         }
     </style>
 </head>
 <body>
 
-    <div class="welcome">Bienvenue</div>
+    <div class="bienvenue">Bienvenue</div>
 
-    <div class="universe">
-        <div class="name-tile t1" onclick="this.classList.toggle('active')">Fabien</div>
-        <div class="name-tile t2" onclick="this.classList.toggle('active')">Clément</div>
-        <div class="name-tile t3" onclick="this.classList.toggle('active')">Célestine</div>
-        <div class="name-tile t4" onclick="this.classList.toggle('active')">Yvon</div>
-        <div class="name-tile t5" onclick="this.classList.toggle('active')">Isabelle</div>
-        <div class="name-tile t6" onclick="this.classList.toggle('active')">Bernard</div>
-        <div class="name-tile t7" onclick="this.classList.toggle('active')">Paulette</div>
-        <div class="name-tile t8" onclick="this.classList.toggle('active')">Corentin</div>
+    <div class="orbite">
+        <div class="nom n1" onclick="this.classList.toggle('active')">Fabien</div>
+        <div class="nom n2" onclick="this.classList.toggle('active')">Clément</div>
+        <div class="nom n3" onclick="this.classList.toggle('active')">Célestine</div>
+        <div class="nom n4" onclick="this.classList.toggle('active')">Yvon</div>
+        <div class="nom n5" onclick="this.classList.toggle('active')">Isabelle</div>
+        <div class="nom n6" onclick="this.classList.toggle('active')">Bernard</div>
+        <div class="nom n7" onclick="this.classList.toggle('active')">Paulette</div>
+        <div class="nom n8" onclick="this.classList.toggle('active')">Corentin</div>
     </div>
 
 </body>
