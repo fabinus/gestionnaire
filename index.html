@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue | Univers Familial</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <title>Bienvenue | Galaxie Familiale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f0f4f8;
-            --glass: rgba(255, 255, 255, 0.6);
-            --border: rgba(255, 255, 255, 0.8);
-            --text: #2d3748;
+            --bg: #f5f7fa;
+            --tile-bg: rgba(255, 255, 255, 0.8);
+            --accent: #4a90e2;
+            --text: #1a202c;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: var(--bg);
-            background-image: radial-gradient(circle at center, #ffffff 0%, #dbeafe 100%);
+            background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #e2e8f0 100%);
             font-family: 'Poppins', sans-serif;
             height: 100vh;
             display: flex;
@@ -30,8 +30,8 @@
         /* --- CONTENEUR D'ORBITE --- */
         .orbit-container {
             position: relative;
-            width: 700px;
-            height: 700px;
+            width: 600px;
+            height: 600px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -45,21 +45,29 @@
             background: white;
             padding: 40px;
             border-radius: 50%;
-            width: 280px;
-            height: 280px;
+            width: 260px;
+            height: 260px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            border: 1px solid var(--border);
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04), inset 0 0 20px rgba(255,255,255,1);
+            border: 1px solid rgba(255,255,255,0.8);
         }
 
         .center-card h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            background: linear-gradient(to bottom, #2d3748, #718096);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 2.8rem;
+            color: var(--text);
+            font-weight: 900;
+            margin: 5px 0;
+        }
+
+        .center-card span {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         /* --- SYSTÈME ORBITAL --- */
@@ -67,62 +75,64 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            animation: rotate 40s linear infinite;
+            animation: rotate 45s linear infinite;
         }
 
         .tile {
             position: absolute;
-            width: 110px;
-            height: 60px;
-            background: var(--glass);
+            width: 120px;
+            height: 50px;
+            background: var(--tile-bg);
             backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            border-radius: 15px;
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-weight: 400;
+            font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: counter-rotate 40s linear infinite;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,0.9);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: counter-rotate 45s linear infinite;
         }
 
-        /* --- EFFETS SPÉCIAUX INDIVIDUELS --- */
-        .t1 { top: 0%; left: 50%; translate: -50% 0; border-bottom: 3px solid #6366f1; } /* Fabien */
-        .t2 { top: 15%; left: 85%; border-radius: 0 20px 0 20px; box-shadow: 0 0 15px rgba(244, 114, 182, 0.3); } /* Clément */
-        .t3 { top: 50%; left: 100%; translate: -100% -50%; border-left: 4px dotted #fbbf24; } /* Célestine */
-        .t4 { top: 85%; left: 85%; background: rgba(241, 245, 249, 0.8); border-right: 3px solid #4ade80; } /* Yvon */
-        .t5 { top: 100%; left: 50%; translate: -50% -100%; border-top: 3px double #2dd4bf; } /* Isabelle */
-        .t6 { top: 85%; left: 15%; translate: -100% 0; font-style: italic; border-bottom: 2px solid #334155; } /* Bernard */
-        .t7 { top: 50%; left: 0%; translate: 0 -50%; border-radius: 40px; box-shadow: inset 0 0 10px white; } /* Paulette */
-        .t8 { top: 15%; left: 15%; translate: -100% 0; background: linear-gradient(white, #e2e8f0); } /* Corentin */
+        /* Styles spécifiques discrets */
+        .t1 { top: 0%; left: 50%; translate: -50% 0; box-shadow: 0 5px 15px rgba(74, 144, 226, 0.1); }
+        .t2 { top: 15%; left: 85%; border-left: 3px solid #ed64a6; }
+        .t3 { top: 50%; left: 100%; translate: -100% -50%; border-bottom: 3px solid #ecc94b; }
+        .t4 { top: 85%; left: 85%; font-weight: 600; }
+        .t5 { top: 100%; left: 50%; translate: -50% -100%; box-shadow: 0 -5px 15px rgba(0,0,0,0.02); }
+        .t6 { top: 85%; left: 15%; translate: -100% 0; border-radius: 30px; }
+        .t7 { top: 50%; left: 0%; translate: 0 -50%; border-right: 3px solid #4a90e2; }
+        .t8 { top: 15%; left: 15%; translate: -100% 0; background: rgba(255,255,255,0.95); }
 
-        /* --- CLIC ET SURVOL --- */
+        /* Interactions */
         .tile:hover {
             background: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
         .tile.active {
-            transform: scale(2.5) !important;
+            transform: scale(2.2) !important;
             z-index: 500;
-            background: #1e293b;
+            background: #1a202c;
             color: white;
-            border-color: #1e293b;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            font-weight: 600;
         }
 
-        /* --- ANIMATIONS --- */
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes counter-rotate { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
-        /* Arrêt au survol du système */
+        /* Pause au survol */
         .orbit-wrapper:hover, .orbit-wrapper:hover .tile {
             animation-play-state: paused;
         }
 
-        @media (max-width: 750px) {
+        @media (max-width: 700px) {
             .orbit-container { transform: scale(0.6); }
         }
     </style>
@@ -130,14 +140,14 @@
 <body>
 
     <div class="orbit-container">
-        <!-- Centre -->
+        <!-- Cœur de l'univers -->
         <div class="center-card">
-            <p style="font-size: 0.7rem; letter-spacing: 5px; color: #718096; margin-bottom: 10px; font-weight: bold;">FAMILLE</p>
+            <span>Univers</span>
             <h1>Bienvenue</h1>
-            <div style="width: 30px; height: 2px; background: #cbd5e0; margin: 20px auto;"></div>
+            <div style="width: 20px; height: 3px; background: var(--accent); margin: 0 auto; border-radius: 10px;"></div>
         </div>
 
-        <!-- Orbite avec les 8 noms -->
+        <!-- Système orbital -->
         <div class="orbit-wrapper">
             <div class="tile t1" onclick="toggleActive(this)">Fabien</div>
             <div class="tile t2" onclick="toggleActive(this)">Clément</div>
@@ -152,11 +162,9 @@
 
     <script>
         function toggleActive(el) {
-            // Si la tuile est déjà active, on la désactive
             if(el.classList.contains('active')) {
                 el.classList.remove('active');
             } else {
-                // Sinon on enlève l'état actif des autres et on l'ajoute à celle-là
                 document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
                 el.classList.add('active');
             }
