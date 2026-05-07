@@ -8,7 +8,8 @@
     <style>
         :root {
             --bg: #f8fafc;
-            --orbit-size: 550px; /* Taille du cercle de rotation */
+            --orbit-radius: 280px; /* Distance entre le centre et les tuiles */
+            --speed: 30s;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,84 +24,94 @@
             overflow: hidden;
         }
 
-        /* --- TITRE CENTRAL --- */
+        /* --- LE TITRE CENTRAL --- */
         .welcome-core {
-            position: absolute; /* Fixé au centre exact */
+            position: absolute;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            padding: 40px 70px;
+            padding: 30px 60px;
             border-radius: 100px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-            pointer-events: none; /* Pour que les clics passent à travers vers les tuiles si besoin */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            text-align: center;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: #1e293b;
-            letter-spacing: -2px;
+            margin: 0;
         }
 
-        /* --- LE CONTENEUR D'ORBITE --- */
-        .orbit-system {
+        /* --- LE SYSTÈME D'ORBITE --- */
+        .orbit-wrapper {
             position: relative;
-            width: var(--orbit-size);
-            height: var(--orbit-size);
+            width: 1px; height: 1px; /* Centre virtuel */
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: rotateSystem 30s linear infinite;
+            animation: rotateAll var(--speed) linear infinite;
         }
 
-        /* --- LES TUILES --- */
-        .tile {
+        /* Chaque "bras" de l'étoile */
+        .arm {
             position: absolute;
-            padding: 12px 25px;
+            width: calc(var(--orbit-radius) * 2);
+            height: 50px;
+            display: flex;
+            justify-content: flex-end; /* Pousse la tuile au bout du bras */
+            align-items: center;
+            pointer-events: none; /* Le bras ne bloque pas les clics */
+        }
+
+        /* Positionnement angulaire des bras */
+        .arm:nth-child(1) { transform: rotate(0deg); }
+        .arm:nth-child(2) { transform: rotate(45deg); }
+        .arm:nth-child(3) { transform: rotate(90deg); }
+        .arm:nth-child(4) { transform: rotate(135deg); }
+        .arm:nth-child(5) { transform: rotate(180deg); }
+        .arm:nth-child(6) { transform: rotate(225deg); }
+        .arm:nth-child(7) { transform: rotate(270deg); }
+        .arm:nth-child(8) { transform: rotate(315deg); }
+
+        /* --- LA TUILE (AU BOUT DU BRAS) --- */
+        .tile {
+            pointer-events: auto; /* Réactive le clic sur la tuile */
+            padding: 12px 24px;
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             font-weight: 600;
             color: #475569;
-            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             white-space: nowrap;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            /* On annule la rotation du système pour garder le texte droit */
-            animation: counterRotate 30s linear infinite;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            
+            /* Animation inverse pour garder le texte droit */
+            animation: counterRotate var(--speed) linear infinite;
         }
 
-        /* Placement des tuiles sur le cercle (Trigonométrie) */
-        /* On les écarte du centre de (var(--orbit-size) / 2) */
-        .t1 { transform: translate(275px) rotate(0deg); }
-        .t2 { transform: rotate(45deg) translate(275px) rotate(-45deg); }
-        .t3 { transform: rotate(90deg) translate(275px) rotate(-90deg); }
-        .t4 { transform: rotate(135deg) translate(275px) rotate(-135deg); }
-        .t5 { transform: rotate(180deg) translate(275px) rotate(-180deg); }
-        .t6 { transform: rotate(225deg) translate(275px) rotate(-225deg); }
-        .t7 { transform: rotate(270deg) translate(275px) rotate(-270deg); }
-        .t8 { transform: rotate(315deg) translate(275px) rotate(-315deg); }
+        /* --- EFFETS SPÉCIAUX PAR TUILE --- */
+        .arm:nth-child(1) .tile { border-bottom: 4px solid #6366f1; }
+        .arm:nth-child(2) .tile { background: rgba(255,255,255,0.4); backdrop-filter: blur(8px); border: 1px solid white; }
+        .arm:nth-child(3) .tile { box-shadow: 5px 5px 15px #cbd5e1, -5px -5px 15px #ffffff; }
+        .arm:nth-child(4) .tile { border: 2px dashed #f472b6; }
+        .arm:nth-child(5) .tile { filter: drop-shadow(0 0 8px #fbbf24); }
+        .arm:nth-child(6) .tile { text-transform: uppercase; letter-spacing: 1px; background: #f1f5f9; }
+        .arm:nth-child(7) .tile { border-radius: 40px; border: 1px solid #94a3b8; }
+        .arm:nth-child(8) .tile { background: linear-gradient(135deg, #ffffff, #e2e8f0); }
 
-        /* --- EFFETS UNIQUES PAR TUILE --- */
-        .t1 { border-left: 5px solid #6366f1; } /* Fabien */
-        .t2 { background: rgba(255,255,255,0.5); backdrop-filter: blur(5px); border: 1px solid white; } /* Clément */
-        .t3 { box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff; } /* Célestine */
-        .t4 { border: 2px solid #f472b6; color: #db2777; } /* Yvon */
-        .t5 { filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4)); } /* Isabelle */
-        .t6 { text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid #1e293b; } /* Bernard */
-        .t7 { border-radius: 50px; background: #f1f5f9; font-style: italic; } /* Paulette */
-        .t8 { background: linear-gradient(145deg, #ffffff, #e2e8f0); border: 1px solid #cbd5e1; } /* Corentin */
-
-        /* --- ÉTAT LORS DU CLIC (Agrandissement) --- */
+        /* --- ETAT ACTIF (AU CLIC) --- */
         .tile.active {
-            scale: 2;
-            z-index: 500;
-            background: #1e293b;
-            color: white;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: scale(1.8);
+            background: #1e293b !important;
+            color: #ffffff !important;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         /* --- ANIMATIONS --- */
-        @keyframes rotateSystem {
+        @keyframes rotateAll {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
@@ -110,18 +121,17 @@
             to { transform: rotate(-360deg); }
         }
 
-        /* Stop au survol du système */
-        .orbit-system:hover, .orbit-system:hover .tile {
+        /* Pause au survol */
+        .orbit-wrapper:hover, 
+        .orbit-wrapper:hover .tile {
             animation-play-state: paused;
         }
 
-        /* Responsive */
+        /* Mobile */
         @media (max-width: 768px) {
-            :root { --orbit-size: 320px; }
             h1 { font-size: 2rem; }
-            .welcome-core { padding: 20px 40px; }
-            .t1 { transform: translate(160px); }
-            /* ... ajustements automatiques pour mobile ... */
+            :root { var(--orbit-radius): 150px; }
+            .arm { width: 300px; }
         }
     </style>
 </head>
@@ -131,26 +141,26 @@
         <h1>Bienvenue</h1>
     </div>
 
-    <div class="orbit-system" id="system">
-        <div class="tile t1" onclick="toggleActive(this)">Fabien</div>
-        <div class="tile t2" onclick="toggleActive(this)">Clément</div>
-        <div class="tile t3" onclick="toggleActive(this)">Célestine</div>
-        <div class="tile t4" onclick="toggleActive(this)">Yvon</div>
-        <div class="tile t5" onclick="toggleActive(this)">Isabelle</div>
-        <div class="tile t6" onclick="toggleActive(this)">Bernard</div>
-        <div class="tile t7" onclick="toggleActive(this)">Paulette</div>
-        <div class="tile t8" onclick="toggleActive(this)">Corentin</div>
+    <div class="orbit-wrapper">
+        <div class="arm"><div class="tile" onclick="select(this)">Fabien</div></div>
+        <div class="arm"><div class="tile" onclick="select(this)">Clément</div></div>
+        <div class="arm"><div class="tile" onclick="select(this)">Célestine</div></div>
+        <div class="arm"><div class="tile" onclick="select(this)">Yvon</div></div>
+        <div class="arm"><div class="tile" onclick="select(this)">Isabelle</div></div>
+        <div class="arm"><div class="tile" onclick="select(this)">Bernard</div></div>
+        <div class="arm"><div class="tile" onclick="select(this)">Paulette</div></div>
+        <div class="arm"><div class="tile" onclick="select(this)">Corentin</div></div>
     </div>
 
     <script>
-        function toggleActive(element) {
-            // Si on clique sur une tuile déjà active, on l'enlève
-            if(element.classList.contains('active')) {
-                element.classList.remove('active');
+        function select(el) {
+            // Si déjà actif, on désactive
+            if(el.classList.contains('active')) {
+                el.classList.remove('active');
             } else {
-                // Sinon on enlève l'active des autres et on l'ajoute à celle-là
+                // On nettoie les autres et on active celle-là
                 document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
-                element.classList.add('active');
+                el.classList.add('active');
             }
         }
     </script>
